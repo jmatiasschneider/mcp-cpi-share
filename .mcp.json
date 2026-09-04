@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mcp-cpi": {
+      "command": "node",
+      "args": ["bin/stdio.js"],
+      "env": {
+        "CPI_PROFILE": "dev"
+      }
+    }
+  }
+}

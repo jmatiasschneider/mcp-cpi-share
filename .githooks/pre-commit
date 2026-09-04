@@ -1,0 +1,30 @@
+#!/bin/sh
+# Hook de pre-commit del repo. Se activa con:
+#   git config core.hooksPath .githooks
+# (una vez por clone — .git/hooks no se versiona, por eso el hook vive acá).
+#
+# Qué hace: si el commit toca una skill de .claude/skills/, verifica que los
+# workspaces que declaran este MCP tengan la MISMA versión. La skill se descubre
+# por archivo al abrir la sesión, así que una copia vieja en un workspace no da
+# error: da una skill desactualizada, en silencio. Eso es justo lo que este repo
+# no tolera en ningún otro lado.
+#
+# NO copia solo: un commit no debería escribir fuera del repo sin que lo pidas.
+# Avisa y te da el comando.
+#
+# Si no hay workspaces que declaren mcp-cpi —hoy es el caso: el server se usa
+# desde este mismo repo—, el check sale 0 y el commit sigue. Nada que
+# sincronizar no es un error.
+#
+# Saltearlo puntualmente: git commit --no-verify
+
+set -e
+
+if git diff --cached --name-only | grep -q '^\.claude/skills/'; then
+  echo "[pre-commit] el commit toca .claude/skills/ — verificando los workspaces…"
+  if ! node scripts/sync-skills.js --check; then
+    echo ""
+    echo "[pre-commit] commit ABORTADO: los workspaces quedarían con la skill vieja."
+    exit 1
+  fi
+fi

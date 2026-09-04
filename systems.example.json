@@ -1,0 +1,27 @@
+{
+  "_comment": "Copiar a systems.json (gitignoreado) — en la raiz de este repo, o donde apunte CPI_SYSTEMS. Una entrada por TENANT, no por credencial: los bloques `oauth` y `runtime` son los dos planos del mismo tenant y se pegan tal cual vienen de la service key del Cockpit. Tiene que haber al menos uno de los dos.",
+  "_default": "dev",
+
+  "dev": {
+    "label": "Tenant DEV - Cloud Integration",
+    "policy": "readonly",
+
+    "_policy": "`readonly` bloquea las tools que escriben o ejecutan. Subir a `readwrite` solo en el profile del tenant donde se desarrolla.",
+
+    "_oauth": "Plan `api`: administrar el tenant (paquetes, deploy, logs). Es lo que usan las tools.",
+    "oauth": {
+      "clientid": "sb-<guid>!b<n>|it!b<n>",
+      "clientsecret": "<secreto>",
+      "tokenurl": "https://<subdomain>.authentication.<region>.hana.ondemand.com/oauth/token",
+      "url": "https://<tenant>.it-cpi<nnn>.cfapps.<region>.hana.ondemand.com"
+    },
+
+    "_runtime": "Plan `integration-flow`: INVOCAR iFlows con sender HTTP/SOAP (scope ESBMessaging.send). Opcional. `url` tambien es opcional: apunta al host -rt y puede no venir en la key.",
+    "runtime": {
+      "clientid": "sb-<guid>!b<n>|it-rt-<tenant>!b<n>",
+      "clientsecret": "<secreto>",
+      "tokenurl": "https://<subdomain>.authentication.<region>.hana.ondemand.com/oauth/token",
+      "url": "https://<tenant>.it-cpi<nnn>-rt.cfapps.<region>.hana.ondemand.com"
+    }
+  }
+}

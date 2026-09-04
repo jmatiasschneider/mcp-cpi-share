@@ -1,0 +1,35 @@
+{
+  "name": "mcp-cpi",
+  "version": "0.1.0",
+  "description": "MCP server para operar un tenant de SAP Integration Suite - Cloud Integration desde Claude",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18.15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmatiasschneider/mcp-cpi-share.git"
+  },
+  "main": "bin/stdio.js",
+  "bin": {
+    "mcp-cpi": "bin/stdio.js"
+  },
+  "scripts": {
+    "start": "node bin/stdio.js",
+    "test": "npm run test:unit && npm run test:boot",
+    "test:unit": "node --test \"test/*.test.js\"",
+    "test:boot": "node scripts/test-mcp-boot.js",
+    "smoke": "node scripts/test-smoke.js",
+    "smoke:write": "node scripts/test-write-cycle.js",
+    "smoke:deploy": "node scripts/test-deploy-cycle.js",
+    "discover": "node scripts/discover.js",
+    "skills:sync": "node scripts/sync-skills.js --write",
+    "skills:check": "node scripts/sync-skills.js --check"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "3.25.76"
+  }
+}

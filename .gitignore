@@ -1,0 +1,30 @@
+# dependencias
+node_modules/
+
+# secretos: NUNCA al repo (sí va systems.example.json)
+systems.json
+systems.json.*
+systems.local.json
+.env
+.env.local
+
+# service keys de BTP descargadas sueltas
+service-key*.json
+.service-key*
+
+# salida cruda del discovery (puede traer datos del tenant)
+discovery-raw/
+*.metadata.xml
+
+# logs
+*.log
+npm-debug.log*
+
+# editor / sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code: settings locales personales
+.claude/settings.local.json
